@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:if="${successMsg}">
+        <h1>Success!</h1>
+        <p>Thanks for Registering your account. Now you can start adding your expenses!</p>
+        <a th:href="@{/login}">Login</a>
+    </div>
+  	<div th:if="${notFound}">
+    	<h1>Record Not Available</h1>
+    	<p th:text="${message}"></p>
+    	<p th:text="${time}"></p>
+    	<a th:href="@{/records}">Back</a>
+  	</div>
+  	<div th:if="${serverError}">
+      	<h1>Contact Administrator</h1>
+      	<p>Something went wrong! Please contact administrator</p>
+      	<p th:text="${message}"></p>
+      	<p th:text="${time}"></p>
+      	<a th:href="@{/records}">Back</a>
+  	</div>
+</body>
+</html>

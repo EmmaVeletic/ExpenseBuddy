@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, lightblue, black) no-repeat center fixed;
+            background-size: cover;
+            color: white;
+            font-size: medium;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <header th:insert="~{fragments/fragments.html :: header}"> </header>
+    <br><br>
+</div>
+<div style="margin:50px;">
+    <h1>Welcome to ExpenseBuddy!</h1>
+    <br><br>
+    <h4>What is ExpenseBuddy?</h4>
+    <p>Full stack web application that manages your personal finances and easily tracks your money, expenses and budget.</p>
+    <br><br>
+    <h4>What can I do with ExpenseBuddy?</h4>
+    <p><ul>
+        <li>Add records of daily expenses and incomes</li>
+        <li>Create new categories for the records</li>
+        <li>Set daily, weekly, monthly and yearly limit for your expenses and get a whatsapp warning message when exceeding the limit</li>
+        <li>Search, sort, and filter the records by category and time periods (day, week, month, year)</li>
+        <li>Visualize the flow of money with a fully customizable overview page 📊 (per day, week, month, year)</li>
+    </ul></p>
+    <br><br>
+    <h4>Is my information safe?</h4>
+    <p>Absolutely. Your password is encrypted, your records available only to you. </p>
+    <br><br>
+    <h5>Why don't you register and see it for yourself? <a href="/registration"> Click here to register </a></h5>
+</div>
+</body>
+</html>

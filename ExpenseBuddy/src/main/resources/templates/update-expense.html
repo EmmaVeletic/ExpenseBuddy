@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Update Expense</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+    <style>
+        th, td {
+            padding:5px;
+        }
+        body {
+            background: linear-gradient(to bottom right, #c9dfe7, #646969) no-repeat center fixed;
+            background-size: cover;
+            color: white;
+            font-size: medium;
+        }
+     
+        textarea{
+            color: black;
+            width: 30%;
+  			height: 100px;
+  			box-sizing: border-box;
+  			border: 2px solid #46496E;
+  			border-radius: 4px;
+  			background-color: rgb(255, 255, 255);
+  			font-size: 16px;
+  			resize: none;
+        }
+       
+        .link{
+			color:white;
+		}
+		button {
+        	background-color: #46496E;
+        	border: none;
+        	color: white;
+        	padding: 12px 24px;
+        	text-align: center;
+        	text-decoration: none;
+        	display: inline-block;
+        	font-size: 15px;
+       		margin: 4px 2px;
+        	cursor: pointer;
+        	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8), 0 6px 20px 0 rgba(0,0,0,0.30);
+      	}
+      	input {
+  			width: 30%;
+  			border: 2px solid #46496E;
+  			border-radius: 2px;
+  			padding: 6px 20px;
+  			margin: 4px 0;
+  			box-sizing: border-box;
+  			color: black;
+		}
+		select{
+			width: 30%;
+  			border: 2px solid #46496E;
+  			border-radius: 2px;
+  			padding: 6px 20px;
+  			margin: 4px 0;
+  			box-sizing: border-box;
+  			color: black;
+		}
+      	h1 {
+  			text-shadow: 2px 2px 5px rgb(255, 255, 255);
+		}
+    </style>
+</head>
+<body>
+	<div>
+		<header th:insert="fragments/fragments.html :: header"> </header>
+		<br><br>
+	</div>
+  		<h1 style="margin:50px">Update Expense</h1>
+  		<hr/>
+  	<div class="container">
+  	<form th:object="${record}" th:action="@{/saveOrUpdateRecord}" method="post" style="margin:50px">
+  	<divclass="row">
+  	 Expense name:
+  	 	<br>
+  		<input type="text" placeholder="Enter expense name" th:field="*{name}"/>
+  		<br/><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+	  	<br/>
+	 Expense amount:
+	 	<br/>
+  		<input type="text" placeholder="Enter expense amount" th:field="*{amount}"/>
+  		<br/><span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+	  	<br/>
+	 Income or outcome:
+	 	<br/>
+  		<input type="text" placeholder="Enter 1 for income 0 for outcome?" th:field="*{incomeOrOutcome}"/>
+  		<br/><span th:if="${#fields.hasErrors('incomeOrOutcome')}" th:errors="*{incomeOrOutcome}"></span>
+	  	<br/>
+	 Category:
+	 <br/>
+	  <select th:field="*{category.id}">
+       <br/><span th:each="category: ${categories}">
+            <option th:value="${category.id}" th:text="${category.name}"></option>
+        </span>
+      </select>
+      <br/>
+      Date:
+      <br/>
+	 	<input type="date" th:field="*{date}"/>
+		<br/><span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+	  <br/>
+	 Description:
+	 <br/>
+  	 <textarea rows="4" placeholder="Enter description" th:field="*{description}"/>
+	  <br/><br/>
+  		<button type="submit">Save</button>
+  	
+  		<input type="hidden" th:field="*{id}"/>
+  	</div>
+  	</div>
+  		<br/><br/>
+        <a th:href="@{/records}" class="link">Don't save changes</a>
+    </form>
+  <div th:replace="fragments/footer.html :: footer"></div>
+  	<script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/jquery-ui.js}"></script>
+    <script th:src="@{/js/jquery-validator.js}"></script>
+    <script th:src="@{/js/expense-form.js}"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+    	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Expense Manager - Expenses</title>
+		<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<style>
+        th, td {
+            padding:8px;
+            text-align: left;
+        }
+        body {
+            background: linear-gradient(to bottom right, #c9dfe7, #646969) no-repeat center fixed;
+            background-size: cover;
+            color: white;
+            font-size: medium;
+        }
+        input, button {
+            color: black;
+        }
+        select, button {
+            color: black;
+        }
+        .button {
+        	background-color: #46496E;
+        	border: none;
+        	color: white;
+        	padding: 20px 34px;
+        	text-align: center;
+        	text-decoration: none;
+        	display: inline-block;
+        	font-size: 15px;
+       		margin: 4px 2px;
+        	cursor: pointer;
+        	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8), 0 6px 20px 0 rgba(0,0,0,0.30);
+       
+  		}
+  		.button:hover {
+     		 transition: 0.7s;
+     		 color: white;
+      	}
+		table {
+  			width: 80%;
+		}
+		table, th, td {
+  		border: 1px solid black;
+  		border-collapse: collapse;
+		}
+
+		th {
+  		background-color: #46496E;
+  		color: white;
+		}
+		.link{
+  		color: white;
+		}
+		.total{
+  		text-decoration: underline overline dotted #46496E;
+  		color: #46496E;
+		}
+		h1 {
+  			text-shadow: 2px 2px 5px rgb(255, 255, 255);
+		}
+		input[type=text]{
+  			width: 25%;
+  			box-sizing: border-box;
+ 			border: 2px solid #ccc;
+  			border-radius: 2px;
+  			font-size: 16px;
+  			background-color: white;
+  			background-position: 8px 8px; 
+  			background-repeat: no-repeat;
+  			padding: 6px 6px 6px 6px;
+		}
+		input[type=submit]{
+			background-color: #46496E;
+        	border: none;
+        	color: white;
+        	padding: 12px 24px;
+        	text-align: center;
+        	text-decoration: none;
+        	display: inline-block;
+        	font-size: 15px;
+       		margin: 4px 2px;
+        	cursor: pointer;
+        	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8), 0 6px 20px 0 rgba(0,0,0,0.30);
+		}
+		select {
+  			width: 25%;
+  			padding: 6px 6px 6px 6px;
+  			border: none;
+  			border-radius: 2px;
+  			background-color: #f1f1f1;
+		}
+		.container {
+  			justify-content: center;
+		}
+    </style>
+</head>
+	</head>
+	<body>
+		<div>
+			<header th:insert="fragments/fragments.html :: header"> </header>
+			<br><br>
+		</div>
+		
+		<h1 style="margin:50px">List of Expenses</h1>
+		<hr/>
+		<div class="container">
+		<div class="total" style="margin:50px">
+			<h2>Your current state right now is 
+			<span th:text="${totalExpenses}+'&#x20AC;'"></span>
+			</h2>
+		</div>
+		
+		<form method="get" th:object="${filter}" th:action="@{/filterExpenses}" style="margin:20px">
+			Search by Keyword:
+			<br></br>
+			<input type="text" placeholder="Enter keyword" field="*{keyword}" name="keyword">
+			
+			<!--<label>Is Income:</label>
+        	<input type="radio" name="incomeOrOutcome" th:field="*{incomeOrOutcome}" value="true" />
+        	<label>True</label>
+        	<input type="radio" name="incomeOrOutcome" th:field="*{incomeOrOutcome}" value="false" />
+        	<label>False</label>-->
+    		<br></br>
+    		Sort by date, amount or earnings:
+    		<br></br>
+			<select th:field="*{sortBy}">
+				<option value="date">Date</option>
+				<option value="amount">Amount</option>
+				<option value="incomeOrOutcome">Income or outcome</option>
+			</select >
+			<!--<select th:field="*{sortByBool}">
+    			<option value="incomeOrOutcome" th:value="1" data-th-field="*{sortByBool}">Income</option>
+    			<optionvalue="incomeOrOutcome" th:value="0" data-th-field="*{sortByBool}">Outcome</option>
+			</select>-->
+			<br></br>
+    		Sort by start date and end date:
+    		<br></br>
+			<input type="text" id="startDate" name="startDate" placeholder="Start date" th:field="*{startDate}"/>
+ 			<input type="text" id="endDate" name="endDate" placeholder="End date" th:field="*{endDate}"/>
+ 			<br></br>
+ 			<input type="submit" name="submit" value="Submit" />
+		</form>
+		<br></br>
+		<table border="2">
+			<thead>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Amount</th>
+				<th>Income or outcome</th>
+				<th>Category</th>
+				<th>Date</th>
+				<th>Actions</th>
+			</thead>
+			<tbody>
+				<tr th:each="record: ${records}">
+					<td th:text="${record.name}"></td>
+					<td th:text="${record.description}"></td>
+					<td th:text="${record.amount}"></td>
+					<td th:text="${record.incomeOrOutcome} ? 'Income' : 'Outcome'"></td>
+					<td th:text="${record.category.name}"></td>
+					<td th:text="${record.date}"></td>
+					<td>
+						<a class="link" th:href="@{/deleteRecord(id=${record.id})}"
+						onclick="return confirm('Are you sure want to delete the expense?');">Delete</a>
+						|
+						<a class="link" th:href="@{/updateRecord(id=${record.id})}">Update</a >
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br></br>
+		<div>
+			<a th:href="@{/createRecord}" class="button"> Create Record</a>
+		</div>
+		<br></br>
+		<br></br>
+		<br></br>
+		</div>
+		<script th:src="@{/js/jquery.js}"></script>
+    	<script th:src="@{/js/jquery-ui.js}"></script>
+   	    <script th:src="@{/js/expense-list.js}"></script>
+   	    <div th:replace="fragments/footer.html :: footer"></div>
+	</body>
+</html>

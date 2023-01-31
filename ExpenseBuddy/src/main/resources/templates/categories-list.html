@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Categories</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        th {
+            background-color: #46496E;
+            color: white;
+        }
+        .button {
+            background-color: #46496E;
+            border: none;
+            color: white;
+            padding: 20px 34px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            margin: 4px 2px;
+            cursor: pointer;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8), 0 6px 20px 0 rgba(0,0,0,0.30);
+        }
+        table, th, td, tr {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding:8px;
+            text-align: left;
+        }
+        body {
+            background: linear-gradient(to bottom right, #c9dfe7, #646969) no-repeat center fixed;
+            background-size: cover;
+            color: white;
+            font-size: medium;
+        }
+        input, button {
+            color: black;
+        }
+        h1 {
+  			text-shadow: 2px 2px 5px rgb(255, 255, 255);
+		}
+		.link{
+			color:white;
+		}
+    </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Category');
+            data.addColumn('number', 'Total');
+            data.addRows([[${data}]]);
+
+            // Set chart options
+            var options = {'title':'Expenses by categories',
+                'width':400,
+                'height':300};
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+<div>
+    <header th:insert="~{fragments/fragments.html :: header}"> </header>
+    <br><br>
+</div>
+<h1 style="margin:50px">Categories</h1>
+<hr/>
+<div id="chart_div" style="margin-left:50px"></div>
+<button onclick="window.location.href='/create-category'" style="position:absolute;right:100px;" class="button">NEW CATEGORY</button>
+<br></br>
+<table style="margin:50px;border: 1px solid black;width:50%;" >
+    <thead>
+    <th></th>
+    <th>Name</th>
+    <th>Records</th>
+    </thead>
+    <tbody>
+    <tr th:each="category: ${categories}" style="border: 1px solid black;">
+        <td>
+            ~
+            <div th:if="${category.custom}">
+                <a th:href="@{/delete-category(id=${category.id})}"
+                   onclick="return confirm('Are you sure want to delete the category?');"> Delete </a>
+                |
+                <a th:href="@{/update-category(id=${category.id})}"> Update </a>
+            </div>
+            ~
+        </td>
+        <td th:text="${category.name}"></td>
+        <td>
+            <ul th:each="record: ${category.records}">
+                <li>
+                    <span th:text="${record.name}"></span>
+                    <span th:text="${record.amount}"></span>&#x20AC;
+                    <span th:text="${record.date}"></span>
+                    <span th:if="${category.custom}"></span>
+                    <a th:href="@{/updateRecord(id=${record.id})}" class="link">Update Record</a>
+                </li>
+            </ul>
+        </td>
+    </tr>
+   
+    </tbody>
+</table>
+<br></br>
+<div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>

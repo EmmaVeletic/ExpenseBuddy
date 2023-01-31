@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #c9dfe7, #646969) no-repeat center fixed;
+            background-size: cover;
+            color: white;
+            font-size: medium;
+        }
+        input, button {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <header th:insert="~{fragments/fragments.html :: header}"> </header>
+        <br><br>
+    </div>
+    <h1 style="margin:50px">Login</h1>
+    <hr/>
+    <div th:if="${successMsgRegistration}" style="margin:50px">
+        <h1>Success!</h1>
+        <p>Thank you for registering. <br>Now you can start adding your expenses! <br>Please login to start:</p>
+    </div>
+    <div>
+        <form th:object="${user}" th:action="@{/login}" method="post" style="margin:50px">
+            <div th:if="${param.error}">
+                <h1>Invalid credentials</h1>
+                <p>Email or the password you provided is invalid. <br>Please try again:</p>
+            </div>
+            Email: <input type="text" name="email" placeholder="Enter email" th:field="*{email}" style="position: fixed;left: 150px;"/>
+            <br/><br/>
+            Password: <input type="password" name="password" placeholder="Enter password" th:field="*{password}" style="position: fixed;left: 150px;"/>
+            <br/><br/>
+            <button type="submit" style="color: black">Login</button>
+        </form>
+    </div>
+	<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

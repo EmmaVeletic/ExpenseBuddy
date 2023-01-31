@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Category</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #c9dfe7, #646969) no-repeat center fixed;
+            background-size: cover;
+            color: white;
+            font-size: medium;
+        }
+        input, button {
+            color: black;
+        }
+        button {
+        	background-color: #46496E;
+        	border: none;
+        	color: white;
+        	padding: 12px 24px;
+        	text-align: center;
+        	text-decoration: none;
+        	display: inline-block;
+        	font-size: 15px;
+       		margin: 4px 2px;
+        	cursor: pointer;
+        	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8), 0 6px 20px 0 rgba(0,0,0,0.30);
+      	}
+      	input {
+  			width: 30%;
+  			border: 2px solid #46496E;
+  			border-radius: 2px;
+  			padding: 6px 20px;
+  			margin: 4px 0;
+  			box-sizing: border-box;
+  			color: black;
+		}
+      	h1 {
+  			text-shadow: 2px 2px 5px rgb(255, 255, 255);
+		}
+    </style>
+</head>
+<body>
+	<div>
+		<header th:insert="fragments/fragments.html :: header"> </header>
+		<br><br>
+	</div>
+  <h1 style="margin:50px">Create New Category</h1>
+  <hr/>
+  <form th:object="${category}" th:action="@{/saveOrUpdateCategory}" method="post" style="margin:50px">
+  	<input type="text" placeholder="Enter category name" th:field="*{name}"/>
+  	<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+	  <br/><br/>
+  	<button type="submit">Save</button>
+  	<input type="hidden" th:field="*{id}"/>
+  </form>
+  <div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>

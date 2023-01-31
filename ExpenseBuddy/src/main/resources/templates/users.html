@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${user.username}"></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #c9dfe7, #646969) no-repeat center fixed;
+            background-size: cover;
+            color: white;
+            font-size: medium;
+        }
+       
+        button {
+        	background-color: #46496E;
+        	border: none;
+        	color: white;
+        	padding: 20px 34px;
+        	text-align: center;
+        	text-decoration: none;
+        	display: inline-block;
+        	font-size: 15px;
+       		margin: 4px 2px;
+        	cursor: pointer;
+        	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8), 0 6px 20px 0 rgba(0,0,0,0.30);
+      	}
+      	 th, td {
+            padding:5px;
+            text-align: left;
+        }
+        table {
+  			width: 25%;
+		}
+		table, th, td {
+  		border: 1px solid black;
+  		border-collapse: collapse;
+		}
+
+		th {
+  		background-color: #46496E;
+  		color: white;
+		}
+      	h1 {
+  			text-shadow: 2px 2px 5px rgb(255, 255, 255);
+		}
+    </style>
+</head>
+<body>
+    <div>
+        <header th:insert="fragments/fragments.html :: header"> </header>
+        <br><br>
+    </div>
+    <div id="userdetails">
+        <div style="margin:50px">
+            <h1><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
+                <button onclick="window.location.href='/user-update'" style="position:fixed;right:100px;">
+                    Change details or password
+                </button>
+                <br></br>
+              <table border="2">
+			<thead>
+				<th>User details</th>
+				<th></th>
+			</thead>
+			<tbody>
+				<tr>
+    				<td>username:</td>
+    				<td><span th:text="${user.username}"></span></td>
+ 				 </tr>
+ 				 <tr>
+    				<td>email:</td>
+    				<td><span th:text="${user.email}"></span></td>
+ 				 </tr>
+ 				 <tr>
+    				<td>phone:</td>
+    				<td><span th:text="${user.phone}"></span></td>
+ 				 </tr>
+ 				  </tr>
+ 				 <tr>
+    				<td>daily limit:</td>
+    				<td><span th:text="${user.dailyLimit}"></span></td>
+ 				 </tr>
+ 				  </tr>
+ 				 <tr>
+    				<td>weekly limit:</td>
+    				<td><span th:text="${user.weeklyLimit}"></span></td>
+ 				 </tr>
+ 				  </tr>
+ 				 <tr>
+    				<td>monthly limit:</td>
+    				<td><span th:text="${user.monthlyLimit}"></span></td>
+ 				 </tr>
+ 				 <tr>
+    				<td>yearly limit:</td>
+    				<td><span th:text="${user.yearlyLimit}"></span></td>
+ 				 </tr>
+			</tbody>
+		</table>
+        </div>
+    </div>
+    <hr style="border: 1px solid black;"/>
+    <div th:if="${monthLimitMsg}" style="margin:50px">
+        <h3 style="color: red;">Warning: Your monthly limit has been reached.</h3 >
+    </div>
+    <div th:replace="fragments/footer.html :: footer"></div>
+</body>
+</html>

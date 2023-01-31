@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User info update</title >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #c9dfe7, #646969) no-repeat center fixed;
+            background-size: cover;
+            color: white;
+            font-size: medium;
+        }
+      
+        .row {
+            display: flex;
+        }
+
+        .column {
+            flex: 50%;
+        }
+        button {
+        	background-color: #46496E;
+        	border: none;
+        	color: white;
+        	padding: 20px 34px;
+        	text-align: center;
+        	text-decoration: none;
+        	display: inline-block;
+        	font-size: 15px;
+       		margin: 4px 2px;
+        	cursor: pointer;
+        	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8), 0 6px 20px 0 rgba(0,0,0,0.30);
+      	}
+      	.link{
+  		color: white;
+		}
+		input {
+  			width: 50%;
+  			border: 2px solid #46496E;
+  			border-radius: 2px;
+  			padding: 6px 20px;
+  			margin: 4px 0;
+  			box-sizing: border-box;
+  			color: black;
+		}
+      	h1 {
+  			text-shadow: 2px 2px 5px rgb(255, 255, 255);
+		}
+ </style>
+</head>
+<body>
+    <div>
+        <header th:insert="~{fragments/fragments.html :: header}"> </header>
+        <br><br>
+    </div>
+    <h1 style="margin:50px">User update</h1>
+    <hr/>
+    <form th:object="${user}" th:action="@{/user-update}" method="post" style="margin:50px">
+        <div class="row">
+            <div class="column">
+                Username:  <span th:text="${existingUser.username}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="text" placeholder="Enter username REQUIRED" th:field="*{username}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+               
+                First name: <span th:text="${existingUser.firstName}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="text" placeholder="Enter first name" th:field="*{firstName}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                
+                Last name: <span th:text="${existingUser.lastName}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="text" placeholder="Enter last name" th:field="*{lastName}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                
+                Email: <span th:text="${existingUser.email}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="text" placeholder="Enter email REQUIRED" th:field="*{email}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                
+                Phone: <span th:text="${existingUser.phone}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="tel" placeholder="Enter phone number" th:field="*{phone}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                
+                Password:
+                <br/> 
+                <input type="password" placeholder="Enter password REQUIRED" th:field="*{password}" style="margin-left: 50px;"/>
+                
+                <br/><br/><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                
+                Confirm password: 
+                <br/>
+                <input type="password" placeholder="Enter confirm password REQUIRED" th:field="*{confirmPassword}" style="margin-left: 50px;"/>
+                <br/><br/>
+                <br/><br/><span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></span>
+                
+            </div>
+            <div class="column">
+                Daily limit: <span th:text="${existingUser.dailyLimit}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="number" step="0.01" placeholder="Enter Daily limit" th:field="*{dailyLimit}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('dailyLimit')}" th:errors="*{dailyLimit}"></span>
+                <br/>
+                Weekly limit: <span th:text="${existingUser.weeklyLimit}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="number" step="0.01" placeholder="Enter Weekly limit" th:field="*{weeklyLimit}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('weeklyLimit')}" th:errors="*{weeklyLimit}"></span>
+                <br/>
+                Monthly limit: <span th:text="${existingUser.monthlyLimit}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="number" step="0.01" placeholder="Enter Monthly limit" th:field="*{monthlyLimit}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('monthlyLimit')}" th:errors="*{monthlyLimit}"></span>
+                <br/>
+                Yearly limit: <span th:text="${existingUser.yearlyLimit}" style="margin-left: 50px;"></span>
+                <br/>
+                <input type="number" step="0.01" placeholder="Enter Yearly limit" th:field="*{yearlyLimit}" style="margin-left: 50px;"/>
+                <br/><br/><span th:if="${#fields.hasErrors('yearlyLimit')}" th:errors="*{yearlyLimit}"></span>
+                <br/><br/>
+            </div>
+        </div>
+        <input type="hidden" th:field="*{id}"/>
+        <button type="submit">Save</button>
+        <br/><br/>
+        <a th:href="@{/home}" class="link"> Don't save changes</a>
+    </form>
+    <div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>
